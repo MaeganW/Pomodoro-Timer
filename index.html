@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Love+Ya+Like+A+Sister" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Pomodoro Timer</h1>
+    </header>
+
+    <div class="break length">
+        <p>BREAK LENGTH</p>
+        <p class="counter-display"><span id="breakDecrement">-</span> <span id="breakTime">5</span> <span id="breakIncrement">+</span></p>
+    </div>
+
+    <div class="session length">
+        <p>SESSION LENGTH</p>
+        <p class="counter-display"><span id="sessionDecrement">-</span> <span id="sessionTime">25</span> <span id="sessionIncrement">+</span></p>
+    </div>
+    
+    <section>
+        <h2>Session</h2>
+        <p><span id="minutes">25</span><span id="colon">:</span><span id="seconds">00</span></p>
+    </section>
+    
+    <div id="pomodoros">
+        <h2>Pomodoro Count: <span>0</span></h2>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+
+</html>

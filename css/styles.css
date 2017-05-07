@@ -1,0 +1,59 @@
+body {
+    background: #4D4141;
+    color: #98E4DD;
+    font-family: "Inconsolata", sans-serif;
+    text-align: center;
+    text-shadow: 2px 2px 4px #000;
+}
+
+header {
+    font-family: "Love Ya Like a Sister", cursive;
+    font-size: 40px;
+}
+
+section {
+    height: 300px;
+    width: 300px;
+    margin: 20px auto;
+    border: 5px solid #98E4DD;
+    border-radius: 50%;
+    box-shadow: 2px 2px 4px #000;
+}
+
+section h2 {
+    padding-top: 15px;
+    font-size: 55px;
+}
+
+section p {
+    font-size: 70px;
+}
+
+.length {
+    display: inline-block;
+}
+
+.length span {
+    font-size: 50px;
+}
+
+.break {
+    padding-right: 30px;
+}
+
+.session {
+    padding-left: 50px;
+}
+
+#colon, #seconds {
+    display: none;
+}
+
+#pomodoros {
+    width: 400px;
+    margin: 35px auto;
+    font-family: "Love Ya Like a Sister", cursive;
+    font-size: 25px;
+    padding: 5px;
+/*    border: 5px dashed #98E4DD;*/
+}
