@@ -62,7 +62,7 @@ display.addEventListener("click", startTimer);
 function startTimer() {
     setInterval(function () {
         startSessionTimer();
-    }, 1000);
+    }, 60000);
 }
 
 //session timer function
