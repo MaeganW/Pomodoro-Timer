@@ -45,6 +45,10 @@ section p {
     padding-left: 50px;
 }
 
+#breakIncrement, #breakDecrement, #sessionDecrement, #sessionIncrement, #minutes {
+    cursor: pointer;
+}
+
 #colon, #seconds {
     display: none;
 }
