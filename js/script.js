@@ -121,10 +121,9 @@ function startSessionTimer() {
 //break timer function
 function startBreakTimer() {
     breakDisplayUpdate();
-    console.log(breakCount);
-    if (breakCount === 1) {
+    if (breakCount === 0) {
         sessionCount = sessionCountRepeat + 1;
-        breakCount = breakCountRepeat + 1;
+        breakCount = breakCountRepeat;
         pomodorosDisplayUpdate();
     }
 }
@@ -142,16 +141,13 @@ function sessionDisplayUpdate() {
 function breakDisplayUpdate() {
     displayh2.textContent = "BREAK!";
     if (breakCount > 0) {
-        breakCount -= 1;
         display.textContent = breakCount;
+        breakCount -= 1;
     }
 }
 
 //update pomodoros count
 function pomodorosDisplayUpdate() {
-    if (sessionCount === 0) {
-        pomodorosCount += 1;
-        pomodoros.textContent = pomodorosCount;
-    }
-
+    pomodorosCount += 1;
+    pomodoros.textContent = pomodorosCount;
 }
