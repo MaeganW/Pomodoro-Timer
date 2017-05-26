@@ -52,6 +52,7 @@ section p {
 
 #breakIncrement, #breakDecrement, #sessionDecrement, #sessionIncrement, #minutes {
     cursor: pointer;
+    z-index: 1000;
 }
 
 #colon, #seconds {
