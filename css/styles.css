@@ -27,6 +27,11 @@ section h2 {
 
 section p {
     font-size: 70px;
+    cursor: pointer;
+}
+
+.increment, .decrement {
+    cursor: pointer;
 }
 
 .length {
@@ -59,5 +64,4 @@ section p {
     font-family: "Love Ya Like a Sister", cursive;
     font-size: 25px;
     padding: 5px;
-/*    border: 5px dashed #98E4DD;*/
 }
