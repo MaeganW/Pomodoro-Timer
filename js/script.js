@@ -1,17 +1,17 @@
-var breakCount = 6;
-var sessionCount = 26;
+var breakCount = 5;
+var sessionCount = 25;
 
-var sessionCountStart = sessionCount;
-var breakCountStart = breakCount;
+var sessionCountRepeat = sessionCount;
+var breakCountRepeat = breakCount;
 
 var breakTime = document.getElementById("breakTime");
 var sessionTime = document.getElementById("sessionTime");
 
-var breakDecrement = document.getElementById("breakDecrement");
-var sessionDecrement = document.getElementById("sessionDecrement");
+var breakDecBtn = document.getElementById("breakDecrement");
+var sessionDecBtn = document.getElementById("sessionDecrement");
 
-var breakIncrement = document.getElementById("breakIncrement");
-var sessionIncrement = document.getElementById("sessionIncrement");
+var breakIncBtn = document.getElementById("breakIncrement");
+var sessionIncBtn = document.getElementById("sessionIncrement");
 
 var displayh2 = document.querySelector("h2");
 var display = document.querySelector("section>p");
@@ -19,57 +19,95 @@ var display = document.querySelector("section>p");
 var pomodoros = document.querySelector("#pomodoros span");
 var pomodorosCount = 0;
 
+var isPaused = true;
 
 //increment and decrement event listeners
-sessionDecrement.addEventListener("click", function () {
-    if (sessionCount > 0) {
-        sessionCount--;
-        sessionCountStart--;
-        sessionTime.textContent = sessionCount;
-        display.textContent = sessionCount;
-    } else return false;
+sessionDecBtn.addEventListener("click", function () {
+    if (sessionCount > 1) {
+        if(isPaused){
+            sessionCount--;
+            sessionCountRepeat--;
+            sessionTime.textContent = sessionCount;
+            display.textContent = sessionCount;
+        }
+    } else if (sessionCount <= 1) {
+        alert("Session length cannot be zero.");
+    }
 });
 
-breakDecrement.addEventListener("click", function () {
-    if (breakCount > 0) {
-        breakCount--;
-        breakCountStart--;
-        breakTime.textContent = breakCount;
-    } else return false;
+breakDecBtn.addEventListener("click", function () {
+    if (breakCount > 1) {
+        if(isPaused){
+            breakCount--;
+            breakCountRepeat--;
+            breakTime.textContent = breakCount;
+        }
+    } else if (breakCount <= 1) {
+        alert("Break length cannot be zero.");
+    }
 });
 
-sessionIncrement.addEventListener("click", function () {
-    if (sessionCount < 60) {
-        sessionCount++;
-        sessionCountStart++;
-        sessionTime.textContent = sessionCount;
-        display.textContent = sessionCount;
-    } else return false;
+sessionIncBtn.addEventListener("click", function () {
+    if (sessionCount <= 60) {
+        if(isPaused){
+            sessionCount++;
+            sessionCountRepeat++;
+            sessionTime.textContent = sessionCount;
+            display.textContent = sessionCount;
+        }
+    } else {
+        alert("Session length cannot exceed 60 minutes.");
+    }
 });
 
-breakIncrement.addEventListener("click", function () {
-    if (breakCount < 30) {
-        breakCount++;
-        breakCountStart++;
-        breakTime.textContent = breakCount;
-    } else return false;
+breakIncBtn.addEventListener("click", function () {
+    if (breakCount <= 30) {
+        if(isPaused){
+            breakCount++;
+            breakCountRepeat++;
+            breakTime.textContent = breakCount;
+        }
+    } else {
+        alert("Break length cannot exceed 30 minutes.");
+    }
 });
 
 //add timer event listener
 display.addEventListener("click", startTimer);
 
 //session timer function
-function startTimer() {
-    setInterval(function () {
-        startSessionTimer();
-    }, 1000);
+function startTimer(event) {
+    
+    var timeInterval = 1000;
+    
+    var clickCount = event.currentTarget;
+    clickCount.clicks = (clickCount.clicks || 0) + 1;
+    console.log(clickCount.clicks);
+    
+    var stop;
+    
+    if(clickCount.clicks % 2 === 0){
+        isPaused = true;
+        clearInterval(stop);
+        console.log(stop);
+    } else {
+        isPaused = false;
+        var intervalId = setInterval(function () {
+            startSessionTimer();
+        }, timeInterval);
+        console.log(intervalId);
+        stop = intervalId;
+    }
+    
 }
+
 
 //session timer function
 function startSessionTimer() {
     var end = 0;
     sessionDisplayUpdate();
     if (sessionCount == end) {
+        pomodorosDisplayUpdate();
         startBreakTimer();
     }
 }
@@ -79,10 +117,10 @@ function startBreakTimer() {
     var end = 1;
     breakDisplayUpdate();
     if (breakCount == end) {
-        sessionCount = sessionCountStart + 1;
-        breakCount = breakCountStart;
+        sessionCount = sessionCountRepeat + 1;
+        breakCount = breakCountRepeat + 1;
 //        clearInterval();
-        pomodorosDisplayUpdate();
+        
     }
 }
 
@@ -98,7 +136,7 @@ function sessionDisplayUpdate() {
 //update break timer display function
 function breakDisplayUpdate() {
     displayh2.textContent = "BREAK!";
-    if (breakCount > 1) {
+    if (breakCount > 0) {
         breakCount -= 1;
         display.textContent = breakCount;
     }
@@ -106,6 +144,9 @@ function breakDisplayUpdate() {
 
 //update pomodoros count
 function pomodorosDisplayUpdate () {
-    pomodorosCount += 1;
-    pomodoros.textContent = pomodorosCount;
+    if(sessionCount === 0){
+        pomodorosCount += 1;
+        pomodoros.textContent = pomodorosCount;
+    }
+    
 }
