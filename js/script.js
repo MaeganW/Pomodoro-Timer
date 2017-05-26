@@ -1,6 +1,11 @@
 var breakCount = 5;
 var sessionCount = 25;
 
+var timeInterval = 1000;
+var pomodorosCount = 0;
+
+var isPaused = true;
+
 var sessionCountRepeat = sessionCount;
 var breakCountRepeat = breakCount;
 
@@ -17,14 +22,12 @@ var displayh2 = document.querySelector("h2");
 var display = document.querySelector("section>p");
 
 var pomodoros = document.querySelector("#pomodoros span");
-var pomodorosCount = 0;
 
-var isPaused = true;
 
 //increment and decrement event listeners
 sessionDecBtn.addEventListener("click", function () {
     if (sessionCount > 1) {
-        if(isPaused){
+        if (isPaused) {
             sessionCount--;
             sessionCountRepeat--;
             sessionTime.textContent = sessionCount;
@@ -37,7 +40,7 @@ sessionDecBtn.addEventListener("click", function () {
 
 breakDecBtn.addEventListener("click", function () {
     if (breakCount > 1) {
-        if(isPaused){
+        if (isPaused) {
             breakCount--;
             breakCountRepeat--;
             breakTime.textContent = breakCount;
@@ -49,7 +52,7 @@ breakDecBtn.addEventListener("click", function () {
 
 sessionIncBtn.addEventListener("click", function () {
     if (sessionCount <= 60) {
-        if(isPaused){
+        if (isPaused) {
             sessionCount++;
             sessionCountRepeat++;
             sessionTime.textContent = sessionCount;
@@ -62,7 +65,7 @@ sessionIncBtn.addEventListener("click", function () {
 
 breakIncBtn.addEventListener("click", function () {
     if (breakCount <= 30) {
-        if(isPaused){
+        if (isPaused) {
             breakCount++;
             breakCountRepeat++;
             breakTime.textContent = breakCount;
@@ -77,50 +80,52 @@ display.addEventListener("click", startTimer);
 
 //session timer function
 function startTimer(event) {
-    
-    var timeInterval = 1000;
-    
+
     var clickCount = event.currentTarget;
     clickCount.clicks = (clickCount.clicks || 0) + 1;
     console.log(clickCount.clicks);
-    
-    var stop;
-    
-    if(clickCount.clicks % 2 === 0){
+
+
+    if (clickCount.clicks % 2 === 0) {
         isPaused = true;
-        clearInterval(stop);
-        console.log(stop);
+        stopInterval();
     } else {
         isPaused = false;
-        var intervalId = setInterval(function () {
-            startSessionTimer();
-        }, timeInterval);
-        console.log(intervalId);
-        stop = intervalId;
+        startInterval(timeInterval);
     }
-    
+
+}
+
+var interval = null;
+
+function startInterval(timeInterval) {
+    interval = setInterval(function () {
+        startSessionTimer();
+    }, timeInterval);
+}
+
+function stopInterval() {
+    clearInterval(interval);
+    interval = null;
 }
 
 
 //session timer function
 function startSessionTimer() {
-    var end = 0;
     sessionDisplayUpdate();
-    if (sessionCount == end) {
-        pomodorosDisplayUpdate();
+    if (sessionCount === 0) {
         startBreakTimer();
     }
 }
 
 //break timer function
 function startBreakTimer() {
-    var end = 1;
     breakDisplayUpdate();
-    if (breakCount == end) {
+    console.log(breakCount);
+    if (breakCount === 1) {
         sessionCount = sessionCountRepeat + 1;
         breakCount = breakCountRepeat + 1;
-//        clearInterval();
-        
+        pomodorosDisplayUpdate();
     }
 }
 
@@ -143,10 +148,10 @@ function breakDisplayUpdate() {
 }
 
 //update pomodoros count
-function pomodorosDisplayUpdate () {
-    if(sessionCount === 0){
+function pomodorosDisplayUpdate() {
+    if (sessionCount === 0) {
         pomodorosCount += 1;
         pomodoros.textContent = pomodorosCount;
     }
-    
+
 }
